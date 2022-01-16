@@ -3,8 +3,12 @@ import 'gun/sea';
 // import 'gun/axe';
 import { writable } from 'svelte/store';
 
+export const peers = ['https://worst-gun-peer.herokuapp.com/gun'];
+
 // Database
-export const gun = GUN();
+export const gun = GUN({
+    peers: peers,
+});
 
 // Gun user
 export const user = gun.user().recall({ sessionStorage: true });
@@ -22,3 +26,9 @@ gun.on('auth', async (event) => {
 
     console.log(`signed in as ${alias}`);
 });
+
+// TODO:
+// - Get a relay peer going - got one working on heroku, but doesnt store for a while
+// - figure out how to deploy this app - deploying to vercel
+// - add longer term storage to the heroku app
+// - create a place to configure peers and use local as default for dev and heroku as default for prod

@@ -3,11 +3,14 @@
 	import { onMount } from 'svelte';
 	import Login from './Login.svelte';
 	import Message from './Message.svelte';
+	import Settings from './Settings.svelte';
 	import { gun, username, user } from './user.js';
 
 	let newMessage;
 	let messages = [];
 
+	let settingsVisible = false;
+	
 	onMount(() => {
 		gun.get('chat')
 			.map()
@@ -43,6 +46,10 @@
 		username.set('');
 	}
 
+	function toggleSettings() {
+		settingsVisible = !settingsVisible;
+	}
+
 </script>
 
 <main>
@@ -72,6 +79,10 @@
 			</div>
 		{:else}
 			<Login />
+			<button on:click={toggleSettings}>Settings</button>
+			{#if settingsVisible}
+				<Settings />
+			{/if}
 		{/if}
 	</div>
 </main>
